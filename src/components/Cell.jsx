@@ -39,9 +39,9 @@ const cligno = keyframes`
 const getCell = (status) => {
   switch (status) {
     case "BOMB":
-      return <img src={bomb}></img>;
+      return <img alt="bomb" src={bomb}></img>;
     case "FLAG":
-      return <img src={flag}></img>;
+      return <img alt="flag" src={flag}></img>;
     case 0:
       return;
     default:
