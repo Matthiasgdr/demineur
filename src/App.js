@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Plate from "./components/Plate";
 
-function App() {
+const App = () => {
+  const [width, setWidth] = React.useState(20);
+  const [height, setHeight] = React.useState(20);
+  const [bombs, setBombs] = React.useState(100);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ display: "flex" }}>
+      <Plate width={width} height={height} bombs={bombs} />
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <label htmlFor="width">Largeur : </label>
+        <input
+          id="width"
+          type="number"
+          value={width}
+          onChange={(e) => setWidth(e.target.value)}
+        />
+        <label htmlFor="height">Hauteur : </label>
+        <input
+          id="height"
+          type="number"
+          value={height}
+          onChange={(e) => setHeight(e.target.value)}
+        />
+        <label htmlFor="bombs">Bombes : </label>
+        <input
+          id="bombs"
+          type="number"
+          value={bombs}
+          onChange={(e) => setBombs(e.target.value)}
+        />
+      </div>
     </div>
   );
-}
+};
 
 export default App;
