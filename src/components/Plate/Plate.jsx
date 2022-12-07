@@ -18,10 +18,6 @@ const Plate = ({ width, height, bombs }) => {
   );
 
   React.useEffect(() => {
-    handleReset();
-  }, [width, height, bombs]);
-
-  React.useEffect(() => {
     if (cells.filter((c) => c.status !== "BOMB").every((c) => c.discover)) {
       setWin(true);
     }
@@ -82,15 +78,19 @@ const Plate = ({ width, height, bombs }) => {
     }
   };
 
-  const handleReset = () => {
+  const handleReset = React.useCallback(() => {
     setCells(initPlateArray(width, height, bombs));
     setLost(false);
     setWin(false);
-  };
+  }, [width, height, bombs]);
 
   const handleSecondChance = () => {
     setLost(false);
   };
+
+  React.useEffect(() => {
+    handleReset();
+  }, [width, height, bombs, handleReset]);
 
   return (
     <div>
