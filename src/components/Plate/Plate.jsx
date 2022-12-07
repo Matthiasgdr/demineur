@@ -1,18 +1,24 @@
 import React from "react";
-import styled from "styled-components";
+import { initPlateArray, getAroundIndexes } from "../utils/utils";
+import { Button, Flex } from "@chakra-ui/react";
 
-import { initPlateArray, getAroundIndexes } from "./utils/utils";
-import Cell from "./Cell";
+import Cell from "../Cell";
+import {
+  StyledPlate,
+  LoseScreen,
+  PlateWrapper,
+  WinScreen,
+} from "./Plate.styles";
 
 const Plate = ({ width, height, bombs }) => {
-  const [lost, setLost] = React.useState(false);
+  const [lost, setLost] = React.useState(true);
   const [win, setWin] = React.useState(false);
   const [cells, setCells] = React.useState(
     initPlateArray(width, height, bombs)
   );
 
   React.useEffect(() => {
-    setCells(initPlateArray(width, height, bombs));
+    handleReset();
   }, [width, height, bombs]);
 
   React.useEffect(() => {
@@ -88,33 +94,45 @@ const Plate = ({ width, height, bombs }) => {
 
   return (
     <div>
-      <StyledPlate width={width}>
-        {cells.map((cell, i) => (
-          <Cell
-            key={i}
-            index={i}
-            cell={cell}
-            onDiscover={handleDiscover}
-            onFlag={handleFlag}
-            lost={lost}
-          />
-        ))}
-      </StyledPlate>
-      {lost && <p className="lost">LOOOOOSER</p>}
-      {win && <p className="win">GAGNé</p>}
-      <button onClick={handleReset}>RESET</button>
-      <button onClick={handleSecondChance}>DEUXIEME CHANCE</button>
+      <PlateWrapper>
+        <StyledPlate width={width}>
+          {cells.map((cell, i) => (
+            <Cell
+              key={i}
+              index={i}
+              cell={cell}
+              onDiscover={handleDiscover}
+              onFlag={handleFlag}
+              lost={lost}
+            />
+          ))}
+        </StyledPlate>
+        {lost && (
+          <LoseScreen>
+            <p>PERDU</p>
+            <Flex justify="center">
+              <Button mr="4" onClick={handleReset} colorScheme="blue">
+                Rééssayer
+              </Button>
+              <Button onClick={handleSecondChance} colorScheme="blue">
+                Seconde chance
+              </Button>
+            </Flex>
+          </LoseScreen>
+        )}
+        {win && <WinScreen>GAGNÉ</WinScreen>}
+      </PlateWrapper>
+      <Flex justify="center" p="4">
+        <Button mr="4" colorScheme="pink" onClick={handleReset}>
+          RESET
+        </Button>
+        <Button colorScheme="pink" onClick={handleSecondChance}>
+          DEUXIEME CHANCE
+        </Button>
+      </Flex>
     </div>
   );
 };
-
-const StyledPlate = styled.div`
-  display: grid;
-  width: ${(p) => p.width * 25}px;
-  grid-template-columns: repeat(${(p) => p.width}, 1fr);
-  grid-auto-columns: min-content;
-  margin-right: 16px;
-`;
 
 Plate.propTypes = {};
 

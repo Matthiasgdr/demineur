@@ -68,8 +68,8 @@ const StyledCell = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 25px;
-  width: 25px;
+  height: 30px;
+  width: 30px;
   user-select: none;
   box-shadow: 0 0 0 1px #ffffff;
   background-color: #ffb8ca;
